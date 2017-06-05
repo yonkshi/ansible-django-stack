@@ -4,9 +4,26 @@
   pip: name=virtualenv
   tags: packages
 
+- name: Install virtualenvwrapper
+  pip: name=virtualenvwrapper
+  tags: packages
+
 - name: Create the virtualenv
   command: virtualenv -p {{ virtualenv_python_version }} {{ virtualenv_path }}
            creates={{ virtualenv_path }}/bin/activate
+
+- name: setting up virtualenvwrapper
+  lineinfile:
+    path: ~/.zshrc
+    line: 'export WORKON_HOME=$HOME/.virtualenvs'
+
+- lineinfile:
+    path: ~/.zshrc
+    line: 'export MSYS_HOME=/c/msys/1.0'
+
+- lineinfile:
+    path: ~/.zshrc
+    line: 'source /usr/local/bin/virtualenvwrapper.sh'
 
 - name: Ensure gunicorn and pycurl are installed in the virtualenv
   pip: virtualenv={{ virtualenv_path }} name={{ item }}

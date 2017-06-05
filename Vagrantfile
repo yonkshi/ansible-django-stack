@@ -6,13 +6,14 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/xenial64"
-
+  config.vm.hostname='dev'
   config.vm.network :private_network, ip: "192.168.33.15"
 
   config.vm.provider "virtualbox" do |vb|
-    vb.customize ["modifyvm", :id, "--name", "MyCoolApp", "--memory", "1024"]
+    vb.customize ["modifyvm", :id, "--name", "YonkDevMachine", "--memory", "1024"]
   end
 
+  config.vm.synced_folder '../foottrail_backend', '/home/vagrant/foottrail_backend/'
   # Shared folder from the host machine to the guest machine. Uncomment the line
   # below to enable it.
   #config.vm.synced_folder "../../../my-cool-app", "/webapps/mycoolapp/my-cool-app"

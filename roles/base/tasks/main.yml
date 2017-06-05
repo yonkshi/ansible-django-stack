@@ -4,6 +4,7 @@
   when: create_swap_file
   tags: swap
 
+
 - name: Install security updates
   apt: default_release={{ ansible_distribution_release }}-security
        update_cache={{ update_apt_cache }}
@@ -20,6 +21,8 @@
     - ntp
     - htop
     - git
+    - python #install pythong2.7
+    - zsh
     - "{{ base_python_package }}-pip"
     - "i{{ base_python_package }}"
     - supervisor
@@ -32,3 +35,5 @@
   tags:
     - packages
     - skip_ansible_lint
+
+- include: setup_zsh.yml
